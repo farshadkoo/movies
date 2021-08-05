@@ -3,18 +3,23 @@ import { useEffect, useState } from "react";
 export default function useFetch({ url, query, method = "GET" }) {
   const [data, setData] = useState(undefined);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
+  const [loading, setLoading] = useState(true);
 
-    const queryParams = query ? new URLSearchParams(query).toString() : null;
+  function reFetch(extraQuery) {
+    const newQuery = { ...query, ...extraQuery };
+    const queryParams = Object.keys(newQuery).length
+      ? new URLSearchParams(newQuery).toString()
+      : null;
 
     fetch(`${url}${queryParams ? `?${queryParams}` : ""}`, { method })
       .then((r) => r.json())
       .then(setData)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, []);
+  }
+  useEffect(() => {
+    reFetch(query);
+  }, [url]);
 
-  return { data, error, loading };
+  return { data, error, reFetch, loading };
 }

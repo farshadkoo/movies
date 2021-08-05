@@ -3,6 +3,8 @@ import { Input, AutoComplete, Rate, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import classes from "./Search.module.scss";
 import { useDebounce } from "use-debounce";
+import { useHistory } from "react-router-dom";
+import slugify from "../../helpers/slugify";
 
 const renderTitle = (title) => (
   <span>
@@ -35,39 +37,31 @@ const renderItem = (title, id, label) => ({
   ),
 });
 
-// const options = [
-//   {
-//     label: renderTitle("Libraries"),
-//     options: [
-//       renderItem("AntDesign", 10000),
-//       renderItem("AntDesign UI", 10600),
-//     ],
-//   },
-//   {
-//     label: renderTitle("Solutions"),
-//     options: [
-//       renderItem("AntDesign UI FAQ", 60100),
-//       renderItem("AntDesign FAQ", 30010),
-//     ],
-//   },
-//   {
-//     label: renderTitle("Articles"),
-//     options: [renderItem("AntDesign design language", 100000)],
-//   },
-// ];
-
 export default function Search() {
-  const [query, setQuery] = useState({});
+  const history = useHistory();
+  const [query, setQuery] = useState(1);
+  const [inputValue, setInputValue] = useState("");
   const [searchedItem, setSearchedItems] = useState([]);
   const debouncedQuery = useDebounce(query, 300);
+
+  function handleLoadMovie(id) {
+    const data = searchedItem.find((d) => d.id == id);
+    setInputValue("");
+
+    switch (data.media_type) {
+      case "movie":
+        return history.push(`/movies/${data.id}/${slugify(data.title)}`);
+      case "tv":
+        return history.push(`/tv-shows/${data.id}/${slugify(data.name)}`);
+      case "person":
+        return history.push(`/celebrities/${data.id}/${slugify(data.name)}`);
+    }
+  }
 
   useEffect(() => {
     if (debouncedQuery) {
       fetch(
-        `https://api.themoviedb.org/3/search/
-        multi?api_key=6f5c1908c6dcc7d74f8144d25c153dd9
-        &language=en-US&page=1&include_adult=
-        false&query=${query}`
+        `https://api.themoviedb.org/3/search/multi?api_key=6f5c1908c6dcc7d74f8144d25c153dd9&language=en-US&page=1&include_adult=false&query=${query}`
       )
         .then((resp) => resp.json())
         .then((data) => setSearchedItems(data.results));
@@ -75,7 +69,7 @@ export default function Search() {
   }, [debouncedQuery]);
 
   function makeOptions() {
-    if (searchedItem && searchedItem.length && query) {
+    if (searchedItem.length && query) {
       return [
         {
           label: renderTitle("Movies"),
@@ -136,11 +130,13 @@ export default function Search() {
       <AutoComplete
         options={makeOptions()}
         onSearch={(e) => setQuery(e)}
-        onSelect={(e) => console.log("onSelect", e)}
+        onSelect={handleLoadMovie}
+        value={inputValue}
+        onChange={setInputValue}
       >
         <Input.Search
           size="large"
-          placeholder="search movies, people and tv shows"
+          placeholder="Search movies, people and tv shows..."
         />
       </AutoComplete>
     </div>
