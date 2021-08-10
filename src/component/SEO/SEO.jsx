@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 function SEO(title, discription) {
   return (
     <Helmet>
-      <title>{`title`} | Watch Movies</title>
+      <title>Watch Movies</title>
       <meta content={discription} name="discription" />
     </Helmet>
   );

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Input, AutoComplete, Rate, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import classes from "./Search.module.scss";
-import { useDebounce } from "use-debounce";
+import useDebounce from "../../hooks/useDebounce";
 import { useHistory } from "react-router-dom";
 import slugify from "../../helpers/slugify";
 
@@ -39,13 +39,13 @@ const renderItem = (title, id, label) => ({
 
 export default function Search() {
   const history = useHistory();
-  const [query, setQuery] = useState(1);
+  const [query, setQuery] = useState("");
   const [inputValue, setInputValue] = useState("");
-  const [searchedItem, setSearchedItems] = useState([]);
+  const [searchedItems, setSearchedItems] = useState([]);
   const debouncedQuery = useDebounce(query, 300);
 
   function handleLoadMovie(id) {
-    const data = searchedItem.find((d) => d.id == id);
+    const data = searchedItems.find((d) => d.id == id);
     setInputValue("");
 
     switch (data.media_type) {
@@ -61,19 +61,19 @@ export default function Search() {
   useEffect(() => {
     if (debouncedQuery) {
       fetch(
-        `https://api.themoviedb.org/3/search/multi?api_key=6f5c1908c6dcc7d74f8144d25c153dd9&language=en-US&page=1&include_adult=false&query=${query}`
+        `https://api.themoviedb.org/3/search/multi?api_key=7416b3659b60cf9465009bb64d7ad28c&language=en-US&page=1&include_adult=false&query=${query}`
       )
-        .then((resp) => resp.json())
+        .then((r) => r.json())
         .then((data) => setSearchedItems(data.results));
     }
   }, [debouncedQuery]);
 
   function makeOptions() {
-    if (searchedItem.length && query) {
+    if (searchedItems.length && query) {
       return [
         {
           label: renderTitle("Movies"),
-          options: searchedItem
+          options: searchedItems
             .filter((item) => item.media_type === "movie")
             .map((i) =>
               renderItem(
@@ -88,8 +88,8 @@ export default function Search() {
             ),
         },
         {
-          label: renderTitle("Tv Show"),
-          options: searchedItem
+          label: renderTitle("TV Shows"),
+          options: searchedItems
             .filter((item) => item.media_type === "tv")
             .map((i) =>
               renderItem(
@@ -105,7 +105,7 @@ export default function Search() {
         },
         {
           label: renderTitle("People"),
-          options: searchedItem
+          options: searchedItems
             .filter((item) => item.media_type === "person")
             .map((i) =>
               renderItem(
@@ -123,8 +123,10 @@ export default function Search() {
         },
       ].filter((type) => type.options.length);
     }
+
     return null;
   }
+
   return (
     <div className={classes.root}>
       <AutoComplete

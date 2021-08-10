@@ -6,7 +6,7 @@ import Container from "../Layout/Container";
 import { UserContext } from "../../context/UserContext";
 import authService from "../../service/authService";
 import image from "../../helpers/image";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import classes from "./Nav.module.scss";
 
 export default function Nav() {
@@ -15,7 +15,7 @@ export default function Nav() {
   const menu = () => (
     <Menu style={{ textAlign: "center" }}>
       <Menu.Item>
-        <span>{user.username}</span>
+        <Link to="/profile">{user.username}</Link>
       </Menu.Item>
       <Menu.Divider />
 

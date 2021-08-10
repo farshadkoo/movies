@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Search from "../Search/Search";
+// import Search from "../Search/Search";
 import Container from "../Layout/Container";
 import classes from "./HeroHeader.module.scss";
 import { HeroHeaderContext } from "../../context/HeroHeaderContext";
@@ -18,9 +18,9 @@ export default function HeroHeader({ children }) {
     >
       <Nav />
 
-      <Container>
+      {/* <Container>
         <Search />
-      </Container>
+      </Container> */}
 
       {children && (
         <div style={{ margin: "48px auto" }}>
