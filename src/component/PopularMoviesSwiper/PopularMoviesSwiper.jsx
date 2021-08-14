@@ -5,14 +5,14 @@ import useMovieDB from "../../Hooks/useMovieDB";
 import SimpleSwiper from "../Simpleswiper/SimpleSwiper";
 
 export default function PopularMoviesSwiper() {
-  const { data = { results: [] } } = useMovieDB("movie/upcoming");
+  const { data = { results: [] } } = useMovieDB("movie/popular");
   const [, setBg] = useContext(HeroHeaderContext);
 
   function changeHeaderBackground(slide) {
-    setBg(image(slide.backdrop_path, "w780"));
+    setBg(image(slide.poster_path, "w780"));
   }
 
   return (
-    <SimpleSwiper slides={data.results} onHOverSlide={changeHeaderBackground} />
+    <SimpleSwiper slides={data.results} onHoverSlide={changeHeaderBackground} />
   );
 }

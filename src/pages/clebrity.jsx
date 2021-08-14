@@ -5,10 +5,10 @@ import useMovieDB from "../Hooks/useMovieDB";
 
 export default function Celebrity() {
   const { id } = useParams();
-  const { data = {}, loading } = useMovieDB(`/person${id}`);
+  const { data = {}, loading } = useMovieDB(`person/${id}`);
   return (
     <Container>
-      <h1>{data.title}</h1>
+      <h1>{data.name}</h1>
     </Container>
   );
 }

@@ -1,4 +1,6 @@
-import React, { createContext, useEffect, useState } from "react";
+import { message } from "antd";
+import React from "react";
+import { createContext, useEffect, useState } from "react";
 import accountService from "../service/accountService";
 
 export const UserContext = createContext({
@@ -17,6 +19,7 @@ export default function UserProvider({ children }) {
 
       accountService.getDetails().then((data) => {
         localStorage.setItem("user", JSON.stringify(data));
+
         setUser(data);
       });
     }
@@ -24,13 +27,15 @@ export default function UserProvider({ children }) {
 
   function logout() {
     localStorage.clear();
-    setSessionId(null);
+
+    message.info("See you! my friends");
 
     setUser(null);
+    setSessionId(null);
   }
 
   return (
-    <UserContext.Provider value={{ user, setUser, logout, setSessionId }}>
+    <UserContext.Provider value={{ user, setUser, setSessionId, logout }}>
       {children}
     </UserContext.Provider>
   );

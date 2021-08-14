@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
-import { Menu, Dropdown } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import { Button, Avatar, Row, Col } from "antd";
+import { Avatar, Button, Col, Row, Menu, Dropdown } from "antd";
 import Container from "../Layout/Container";
+import { UserOutlined } from "@ant-design/icons";
 import { UserContext } from "../../context/UserContext";
 import authService from "../../service/authService";
 import image from "../../helpers/image";
-import { NavLink, Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import classes from "./Nav.module.scss";
 
 export default function Nav() {
@@ -15,7 +14,7 @@ export default function Nav() {
   const menu = () => (
     <Menu style={{ textAlign: "center" }}>
       <Menu.Item>
-        <Link to="/profile">{user.username}</Link>
+        <Link to="/profile">{user.name}</Link>
       </Menu.Item>
       <Menu.Divider />
 
@@ -25,8 +24,8 @@ export default function Nav() {
     </Menu>
   );
 
-  function handelLogin() {
-    authService.creatRequestToken().then((data) => {
+  function handleLogin() {
+    authService.createRequestToken().then((data) => {
       window.location = `https://www.themoviedb.org/authenticate/${
         data.request_token
       }?redirect_to=${import.meta.env.VITE_REDIRECT_URL}`;
@@ -36,18 +35,17 @@ export default function Nav() {
   return (
     <nav className={classes.root}>
       <Container>
-        {import.meta.env.VITE_REDIRECT_URL}
         <Row justify="space-between">
           <Col>
             <ul>
-              <li className={classes.homee}>
+              <li>
                 <NavLink exact activeClassName={classes.active} to="/">
                   Home
                 </NavLink>
               </li>
               <li>
                 <NavLink activeClassName={classes.active} to="/movies">
-                  movies
+                  Movies
                 </NavLink>
               </li>
               <li>
@@ -62,16 +60,24 @@ export default function Nav() {
               </li>
             </ul>
           </Col>
+
           <Col>
             {user ? (
-              <Dropdown overlay={menu()} placement="bottomCenter">
+              <Dropdown
+                overlay={menu()}
+                placement="bottomCenter"
+                trigger={["click"]}
+              >
                 <Avatar
+                  style={{ cursor: "pointer" }}
                   size="large"
-                  src={image(user?.avatar?.tmdb?.avatar_path, "w780")}
+                  {...(user?.avatar?.tmdb?.avatar_path
+                    ? { src: image(user?.avatar?.tmdb?.avatar_path, "w185") }
+                    : { icon: <UserOutlined /> })}
                 />
               </Dropdown>
             ) : (
-              <Button onClick={handelLogin}>Login</Button>
+              <Button onClick={handleLogin}>Login</Button>
             )}
           </Col>
         </Row>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import PrivateRoutes from "../component/PrivateRoutes/PrivateRoutes";
+
 import Home from "./Home";
 import About from "./About";
 import Auth from "./Auth";
@@ -15,7 +16,7 @@ export default function Pages() {
       <Route exact path="/">
         <Home />
       </Route>
-      <Route path="/About">
+      <Route path="/about">
         <About />
       </Route>
       <Route path="/auth">
@@ -24,13 +25,13 @@ export default function Pages() {
       <PrivateRoutes path="/profile">
         <Profile />
       </PrivateRoutes>
-      <Route path="/movies/:id/:movieTitel ">
+      <Route path="/movies/:id/:movieTitle">
         <Movie />
       </Route>
-      <Route path="/tv-shows/:id/:tvshowsName ">
+      <Route path="/tv-shows/:id/:tvShowName">
         <TvShow />
       </Route>
-      <Route path="/celebrites/:id/:celebrityName ">
+      <Route path="/celebrities/:id/:celebrityName">
         <Celebrity />
       </Route>
     </Switch>

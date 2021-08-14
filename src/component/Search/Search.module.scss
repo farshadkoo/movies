@@ -1,25 +1,30 @@
 .root {
-  margin-top: 25px;
+  margin-top: 32px;
+
   :global {
     .ant-select {
       width: 100%;
     }
+
     .ant-select {
       background: #233a50;
     }
+
     .ant-input {
       background: #233a50;
-      padding: 12px 10px;
+      padding: 12px ​10px;
       border: none;
-      color: white;
     }
+
     .ant-input-group {
       border: solid 2px #233a50;
     }
+
     .ant-input-search-button,
     .ant-input-group-addon {
-      background: #233a50;
+      background-color: #233a50;
     }
+
     .ant-input-search-button {
       border: none;
     }

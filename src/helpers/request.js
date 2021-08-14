@@ -4,7 +4,7 @@ function URL(url) {
   }
   const session_id = localStorage.getItem("session_id");
   const query = {
-    api_key: `7416b3659b60cf9465009bb64d7ad28c`,
+    api_key: "7416b3659b60cf9465009bb64d7ad28c",
     ...(session_id && { session_id }),
     ...url.query,
   };
@@ -18,7 +18,7 @@ function options(body, method) {
   return {
     method,
     headers: {
-      "Content-type": "application/json",
+      "Content-Type": "application/json",
     },
     ...(body && { body: JSON.stringify(body) }),
   };

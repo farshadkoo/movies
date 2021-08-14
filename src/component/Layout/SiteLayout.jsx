@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Layout } from "antd";
 import Pages from "../../pages/Pages";
 import HeroHeader from "../HeroHeader/HeroHeadeer";
-import { Switch, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import PopularMoviesSwiper from "../PopularMoviesSwiper/PopularMoviesSwiper";
 
 const { Content, Footer } = Layout;
@@ -16,6 +16,7 @@ export default function SiteLayout() {
         return <PopularMoviesSwiper />;
       case "/about":
         return <div>About</div>;
+
       default:
         return null;
     }

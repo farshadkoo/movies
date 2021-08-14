@@ -2,23 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 
-function SEO(title, discription) {
+export default function SEO({ title, description }) {
   return (
     <Helmet>
-      <title>Watch Movies</title>
-      <meta content={discription} name="discription" />
+      <title>{title} | Mapsa Movies </title>
+      <meta content={description} name="description" />
     </Helmet>
   );
 }
 
-SEO.defultProps = {
-  title: "Watch Movies",
-  discription: "Watch Movies Database",
+SEO.defaultProps = {
+  title: "Fill title",
+  description: "Mapsa Movies Database",
 };
 
 SEO.propTypes = {
   title: PropTypes.string,
-  discription: PropTypes.string,
+  description: PropTypes.string,
 };
-
-export default SEO;

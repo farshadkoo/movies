@@ -1,7 +1,7 @@
-import request from "../helpers/requset/request";
+import request from "../helpers/request";
 
 function getDetails() {
-  return request.get({ path: `account` });
+  return request.get({ path: "account" });
 }
 
 const accountService = {

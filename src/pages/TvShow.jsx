@@ -5,7 +5,7 @@ import useMovieDB from "../Hooks/useMovieDB";
 
 export default function TvShow() {
   const { id } = useParams();
-  const { data = {}, loading } = useMovieDB(`/tv${id}`);
+  const { data = {}, loading } = useMovieDB(`tv/${id}`);
   return (
     <Container>
       <h1>{data.name}</h1>

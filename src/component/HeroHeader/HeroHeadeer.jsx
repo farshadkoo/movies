@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-// import Search from "../Search/Search";
+import Search from "../Search/Search";
 import Container from "../Layout/Container";
 import classes from "./HeroHeader.module.scss";
 import { HeroHeaderContext } from "../../context/HeroHeaderContext";
@@ -12,15 +12,14 @@ export default function HeroHeader({ children }) {
     <header
       className={classes.root}
       style={{
-        backgroundSize: "cover",
-        backgroundImage: `linear-gradient(rgb(3 13 24 / 50%), rgb(3 13 24 / 40%)),url(${bg})`,
+        backgroundImage: `linear-gradient(rgb(3 13 24), rgb(3 13 24 / 40%)), url(${bg})`,
       }}
     >
       <Nav />
 
-      {/* <Container>
+      <Container>
         <Search />
-      </Container> */}
+      </Container>
 
       {children && (
         <div style={{ margin: "48px auto" }}>
